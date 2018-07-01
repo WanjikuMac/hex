@@ -99,6 +99,8 @@ defmodule Hex.Mix do
   we use in overridden_parents to check overridden status.
   """
   def attach_dep_and_children(deps, app, children) do
+    IO.inspect deps, label: :deps
+    IO.inspect app, label: :app
     {override, _} = Map.fetch!(deps, app)
 
     children =
