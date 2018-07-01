@@ -171,18 +171,16 @@ defmodule Hex.Version do
   end
 
   defp custom_requirement(requirement) do
-    try do
-      req =
-        requirement
-        |> String.split(" ", trim: true)
-        |> split_ops()
-        |> custom_parse()
+    req =
+      requirement
+      |> String.split(" ", trim: true)
+      |> split_ops()
+      |> custom_parse()
 
-      {:ok, %Requirement{source: requirement, req: req}}
-    catch
-      :error ->
-        :error
-    end
+    {:ok, %Requirement{source: requirement, req: req}}
+  catch
+    :error ->
+      :error
   end
 
   @version_ops ~w(~> == != <= >= < >)

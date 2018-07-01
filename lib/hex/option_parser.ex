@@ -22,11 +22,9 @@ defmodule Hex.OptionParser do
     defp to_existing_key(option, true), do: String.to_atom(option)
 
     defp to_existing_key(option, false) do
-      try do
-        String.to_existing_atom(option)
-      rescue
-        ArgumentError -> nil
-      end
+      String.to_existing_atom(option)
+    rescue
+      ArgumentError -> nil
     end
 
     defp format_errors([_ | _] = errors, opts) do

@@ -18,37 +18,33 @@ defmodule Hex.Crypto do
   end
 
   def base64url_encode(binary) do
-    try do
-      Base.url_encode64(binary, padding: false)
-    catch
-      _, _ ->
-        binary
-        |> Base.encode64()
-        |> urlsafe_encode64(<<>>)
-    end
+    Base.url_encode64(binary, padding: false)
+  catch
+    _, _ ->
+      binary
+      |> Base.encode64()
+      |> urlsafe_encode64(<<>>)
   end
 
   def base64url_decode(binary) do
-    try do
-      Base.url_decode64(binary, padding: false)
-    catch
-      _, _ ->
-        try do
-          binary = urlsafe_decode64(binary, <<>>)
+    Base.url_decode64(binary, padding: false)
+  catch
+    _, _ ->
+      try do
+        binary = urlsafe_decode64(binary, <<>>)
 
-          binary =
-            case rem(byte_size(binary), 4) do
-              2 -> binary <> "=="
-              3 -> binary <> "="
-              _ -> binary
-            end
+        binary =
+          case rem(byte_size(binary), 4) do
+            2 -> binary <> "=="
+            3 -> binary <> "="
+            _ -> binary
+          end
 
-          Base.decode64(binary)
-        catch
-          _, _ ->
-            :error
-        end
-    end
+        Base.decode64(binary)
+      catch
+        _, _ ->
+          :error
+      end
   end
 
   defp urlsafe_encode64(<<?+, rest::binary>>, acc) do

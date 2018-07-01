@@ -44,7 +44,7 @@ defmodule Hex.Crypto.PKCS5 do
     curr
   end
 
-  defp pbkdf2_exor(password, salt, iterations, hash, i = 1, counter, <<>>, <<>>) do
+  defp pbkdf2_exor(password, salt, iterations, hash, 1 = i, counter, <<>>, <<>>) do
     next =
       :crypto.hmac(hash, password, <<salt::binary, counter::1-unsigned-big-integer-unit(32)>>)
 

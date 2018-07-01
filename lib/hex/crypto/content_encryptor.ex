@@ -32,7 +32,7 @@ defmodule Hex.Crypto.ContentEncryptor do
 
   @callback key_length(params :: any) :: non_neg_integer
 
-  def init(protected = %{enc: enc}, opts) do
+  def init(%{enc: enc} = protected, opts) do
     case content_encryptor_module(enc) do
       :error ->
         {:error, "Unrecognized ContentEncryptor algorithm: #{inspect(enc)}"}
